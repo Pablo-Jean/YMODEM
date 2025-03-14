@@ -195,6 +195,7 @@ ymodem_err_e 	ymodem_Reset(ymodem_t *ymodem){
 	ymodem->packetSize 		= 0;
 	ymodem->packetsReceived	= 0;
 	ymodem->eotReceived 	= 0;
+	ymodem->nextStatus 		= YMODEM_OK;
 
 	return YMODEM_OK;
 }
@@ -370,12 +371,15 @@ static ym_ret_t ymodem_ProcessFirstPacket(ymodem_t *ymodem) {
 			/* Packet has valid data */
 			/* Get File Name */
 			filePtr = ymodem->packetData + YM_PACKET_HEADER;
+			i = 0;
 			while ((i < YM_FILE_NAME_LENGTH) && (*filePtr != '\0')){
 				ymodem->fileName[i++] = *filePtr++;
 			}
 			ymodem->fileName[i++] = '\0';
 
-			for (i = 0, filePtr++; (*filePtr != ' ') && (i < YM_FILE_SIZE_LENGTH); ) {
+			i = 0;
+			filePtr++;
+			while ((i < YM_FILE_SIZE_LENGTH)  && (*filePtr != ' ')){
 				ymodem->fileSizeStr[i++] = *filePtr++;
 			}
 			ymodem->fileSizeStr[i++] = '\0';
