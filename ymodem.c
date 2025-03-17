@@ -270,6 +270,8 @@ ymodem_err_e ymodem_ReceiveByte(ymodem_t *ymodem, uint8_t c) {
 				ymodem->packetData[ymodem->packetBytes++] = c;
 				if (ymodem->packetData[YM_PACKET_SEQNO_INDEX] != ((ymodem->packetData[YM_PACKET_SEQNO_COMP_INDEX] ^ 0xFF) & 0xFF)) {
 					/* Check byte 1 == (byte 2 XOR 0xFF) */
+					ymodem->startOfPacket = 1;
+					ymodem->packetBytes = 0;
 					ret = YM_RX_ERROR;
 					break;
 				} else {
@@ -281,7 +283,6 @@ ymodem_err_e ymodem_ReceiveByte(ymodem_t *ymodem, uint8_t c) {
 				}
 			}
 		}
-	
 	} while (0); // Empty do while to avoid multiple "return" statements
 	ymodem->prevC = c;
 	GenRet = GenerateResponse(ymodem, ret);
@@ -392,9 +393,6 @@ static ym_ret_t ymodem_ProcessFirstPacket(ymodem_t *ymodem) {
 			else{
 				ret = YM_SIZE_ERR;
 			}
-
-			/* Send ACK AND CRC, READY FOR DATA */
-			ret = YM_START_RX;
 			ymodem->packetsReceived++;
 			break;
 
