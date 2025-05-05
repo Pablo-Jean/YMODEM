@@ -17,12 +17,12 @@ V1.0.0
 This documentation describes the YMODEM protocol implementation as defined in the provided [`ymodem.c`](#ymodemc) and [`ymodem.h`](#ymodemh) files. The library enables robust file transfer over UART, suitable for embedded systems such as STM32, MSP430, and other microcontrollers.
 
 This library is based on work performed by https://github.com/edholmes2232.
+
 ---
 
 ## Table of Contents
 
 - [YMODEM Protocol Library Documentation](#ymodem-protocol-library-documentation)
-  - [This library is based on work performed by https://github.com/edholmes2232.](#this-library-is-based-on-work-performed-by-httpsgithubcomedholmes2232)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Features](#features)
